@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class TextProcessing {
     public static void main(String[] args) throws Exception {
-    wordsInFile("Text2.txt");
-    whatALongWord("Text2.txt");
-
+    wordsInFile("Text.txt");
+    whatALongWord("Text.txt");
+    sentenceInFile("Text.txt");
 
 
 
@@ -56,7 +56,6 @@ public class TextProcessing {
         if (string.length() != 0) {
             for (int i = 0; i < string.length(); i++) {
                 if (string.charAt(i) == ' '){
-                    System.out.println(i);
                     arrayList.add(i);
 
                 }
@@ -80,4 +79,26 @@ public class TextProcessing {
         fileReader.close();
     }//How many words those are have three five and seven symbol
 
+    public static void sentenceInFile (String fileName) throws Exception{
+        StringBuilder stringBuilder = new StringBuilder();
+        FileReader fileReader = new FileReader(fileName);
+        Scanner scanner = new Scanner(fileReader);
+        while (scanner.hasNextLine()){
+            stringBuilder.append(scanner.nextLine());
+        }
+        String string = stringBuilder.toString();
+        string.trim();
+        int count = 1;
+        if (string.length() != 0) {
+            for (int i = 0; i < string.length(); i++) {
+                if (i >= 1) {
+                    if (string.charAt(i) == ' ' & string.charAt(i-1) == '.') {
+                        count++;
+                    }
+                }
+            }
+        }
+        System.out.println("In this text is: "+count+" sentences");
+        fileReader.close();
+    }
 }
