@@ -9,7 +9,8 @@ public class TextProcessing {
         ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
         whatALongWord(listSpaceBetweenWords);
         ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
-
+        String sentenceUpperCase = eachSecondSentence(textFromFile);
+        newFile("TextUpperCase.txt",sentenceUpperCase);
     }
 
     public static void newFile(String fileName, String textInFile) throws Exception {
@@ -90,4 +91,21 @@ public class TextProcessing {
         System.out.println("In this text is: "+(arrayListSentence.size()-1)+" sentences");
         return arrayListSentence;
     }//Return array sentence and show how many sentence is
+
+    public static String eachSecondSentence (String string) {
+        ArrayList <Integer> listSentence = sentenceInFile(string);
+        StringBuilder stringBuilder = new StringBuilder();
+        String stringTemp= "";
+
+        for (int i = 1; i < listSentence.size(); i++) {
+            if (i%2 == 0){
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)).toUpperCase());
+            }
+            else {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)));
+            }
+            }
+        return stringTemp;
+    }//Return text where each second sentence uppercase letters
+
 }
