@@ -5,11 +5,10 @@ import java.util.Scanner;
 
 public class TextProcessing {
     public static void main(String[] args) throws Exception {
-    wordsInFile("Text.txt");
-    whatALongWord("Text.txt");
-    sentenceInFile("Text.txt");
-
-
+        String textFromFile =  returnString("Text.txt");
+        ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
+        whatALongWord(listSpaceBetweenWords);
+        ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
 
     }
 
@@ -19,86 +18,76 @@ public class TextProcessing {
         fileWriter.close();
     }//Create new file and add text in this file
 
-    public static void wordsInFile (String fileName) throws Exception{
+    public static String returnString (String fileName) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         FileReader fileReader = new FileReader(fileName);
         Scanner scanner = new Scanner(fileReader);
         while (scanner.hasNextLine()){
             stringBuilder.append(scanner.nextLine());
         }
-        String string = stringBuilder.toString();
-        string.trim();
-        int count = 1;
-        if (string.length() != 0) {
-            for (int i = 0; i < string.length(); i++) {
-                if (string.charAt(i) == ' '){
-                    count++;
+        return stringBuilder.toString();
+    }//Return text from file
+
+    public static ArrayList <Integer> wordsInFile (String textFromFile) {
+        ArrayList <Integer> arrayListWorlds = new ArrayList<>();
+        arrayListWorlds.add(0);
+        if (textFromFile.length() != 0) {
+            for (int i = 0; i < textFromFile.length(); i++) {
+                if (textFromFile.charAt(i) == ' '){
+                    arrayListWorlds.add(i);
                 }
             }
+            arrayListWorlds.add(textFromFile.length()-1);
         }
-        System.out.println("FILE INSIDE: "+stringBuilder);
-        System.out.println("In this file is: "+count+" words");
-        fileReader.close();
-    }//How many words in file
+        System.out.println("In this file is: "+(arrayListWorlds.size()-1)+" words");
+        return arrayListWorlds;
+    }//Return array spaces between words
 
-    public static void whatALongWord (String fileName) throws Exception {
-        StringBuilder stringBuilder = new StringBuilder();
-        FileReader fileReader = new FileReader(fileName);
-        Scanner scanner = new Scanner(fileReader);
-        while (scanner.hasNextLine()){
-            stringBuilder.append(scanner.nextLine());
-        }
-        String string = stringBuilder.toString();
-        string.trim();
-
-        ArrayList <Integer> arrayList = new ArrayList<>();
-        arrayList.add(0);
-        if (string.length() != 0) {
-            for (int i = 0; i < string.length(); i++) {
-                if (string.charAt(i) == ' '){
-                    arrayList.add(i);
-
-                }
-            }
-        }
+    public static void whatALongWord (ArrayList <Integer> listSpace) {
         int three = 0;
         int five = 0;
         int seven = 0;
-        for (int j=1; j < arrayList.size();j++){
-            switch ((arrayList.get(j)-arrayList.get(j-1))-1){
-                case 3: three++;
-                case 5: five++;
-                case 7: seven++;
+        for (int i = 0; i < listSpace.size()-1; i++) {
+            int longWord = 0;
+            if (i == 0) {
+                longWord = listSpace.get(i) - listSpace.get(i + 1);
+            }
+            if (i > 0 && i < listSpace.size() - 2) {
+                longWord = (listSpace.get(i) - listSpace.get(i + 1))+1;
+            }
+            if (i == listSpace.size() - 2) {
+                longWord = listSpace.get(i) - listSpace.get(i + 1);
+            }
+            switch (longWord) {
+                case -3:
+                    three++; break;
+                case -5:
+                    five++; break;
+                case -7:
+                    seven++; break;
             }
         }
-        System.out.println("FILE INSIDE: "+stringBuilder);
-        System.out.println("In this file is: "+three+" words that have three symbol");
-        System.out.println("In this file is: "+five+" words that have five symbol");
-        System.out.println("In this file is: "+seven+" words that have seven symbol");
-
-        fileReader.close();
+            System.out.println("In this file is: " + three + " words that have three symbol");
+            System.out.println("In this file is: " + five + " words that have five symbol");
+            System.out.println("In this file is: " + seven + " words that have seven symbol");
     }//How many words those are have three five and seven symbol
 
-    public static void sentenceInFile (String fileName) throws Exception{
-        StringBuilder stringBuilder = new StringBuilder();
-        FileReader fileReader = new FileReader(fileName);
-        Scanner scanner = new Scanner(fileReader);
-        while (scanner.hasNextLine()){
-            stringBuilder.append(scanner.nextLine());
-        }
-        String string = stringBuilder.toString();
-        string.trim();
-        int count = 1;
-        if (string.length() != 0) {
-            for (int i = 0; i < string.length(); i++) {
+    public static ArrayList <Integer> sentenceInFile (String textFromFile) {
+        ArrayList <Integer> arrayListSentence = new ArrayList<>();
+        arrayListSentence.add(0);
+        if (textFromFile.length() != 0) {
+            for (int i = 0; i < textFromFile.length(); i++) {
                 if (i >= 1) {
-                    if (string.charAt(i) == ' ' & string.charAt(i-1) == '.') {
-                        count++;
+                    if (textFromFile.charAt(i) == ' ' & textFromFile.charAt(i-1) == '.' ||
+                            textFromFile.charAt(i) == ' ' & textFromFile.charAt(i-1) == '!' ||
+                    textFromFile.charAt(i) == ' ' & textFromFile.charAt(i-1) == '?')  {
+                        arrayListSentence.add(i);
                     }
                 }
             }
+            arrayListSentence.add(textFromFile.length()-1);
         }
-        System.out.println("In this text is: "+count+" sentences");
-        fileReader.close();
-    }
+        System.out.println("In this text is: "+(arrayListSentence.size()-1)+" sentences");
+        return arrayListSentence;
+    }//Return array sentence and show how many sentence is
 }
