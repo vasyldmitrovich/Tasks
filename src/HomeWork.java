@@ -1,36 +1,36 @@
 import java.util.Scanner;
 
 public class HomeWork {
-    public static int indexArray = 0;
-    final static public int heightArray = 7;
-    final static public int wightArray = 180;
-    public static String [] [] strings = new String[heightArray][wightArray];//Would be better If this array was List?
+    /*The user input sentence, the output gets own sentence but big letters*/
+    private static int indexArray = 0;
+    final static private int heightArray = 7;
+    final static private int wightArray = 180;
+    private static String [] [] strings = new String[heightArray][wightArray];//Array where concat all letters
     public static void main(String[] args) {
         String inputSentence = getInputSentence();
         mySentence(inputSentence);
         printArray();
 
     }
-    public static String getInputSentence(){
+    private static String getInputSentence(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please input any word or sentence. I will show you how it will be look on airport table." +
                 "\nATTENTION: only letters a-z or A-Z, space, numbers 0-9 and symbol ! ? ( ) and point." +
                 "\nDo not length then 30 symbols");
         String sentence =  scanner.nextLine();
         return sentence;
-    }//In future I am create security from inattentive people. Now is only message.
+    }//Scanner input letters.
 
-    public static void mySentence(String mSentence){
+    private static void mySentence(String mSentence){
         String string = mSentence.toUpperCase();
+        /*Clean array from value null*/
         for (int l = 0; l < strings.length; l++){
             for (int k=0; k < strings[l].length; k++){
                 strings[l][k] = "";
             }
-        }//Clean array from value null
-        /*
-        In order to create security from inattentive people I need past there operator "if" and
-        include Regular Expressions?
-         */
+        }
+        /*A loop that runs through each character in a line,
+        and add this character in array*/
         for (int i = 0; i < string.length(); i++){
             char oneLetter = string.charAt(i);
             switch (oneLetter){
@@ -78,32 +78,34 @@ public class HomeWork {
                 case '.': plusLetter(symbolPoint()); break;
 
             }
-
-
         }
-    }
+    }//Build array with letters
 
-    public static void plusLetter(String [] [] str){
+    private static void plusLetter(String [] [] str){
         int rows = str.length;// I get length rows array
         int columns = str[0].length;// I get length columns array
+        /*This cycle get start index from static variable,
+        get array and set this array in static array*/
         for (int i=0; i < rows; i++ ){
             for (int j=indexArray; j < indexArray+columns; j++){
                 strings[i][j] = str[i][j-indexArray];
             }
         }
         indexArray = indexArray+columns;
-    }
+    }//Add letter in array
 
-    public static void printArray(){
+    private static void printArray(){
         for (int i=0; i < strings.length; i++){
             for (int j=0; j<strings[i].length; j++){
                 System.out.print(strings[i] [j]);
             }
             System.out.println();
         }
-    }
+    }//Print array letters
 
-    public static String [] [] letterA (){
+    /*letters*/
+
+    private static String [] [] letterA (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -156,7 +158,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterB (){
+    private static String [] [] letterB (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -209,7 +211,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterC (){
+    private static String [] [] letterC (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -262,7 +264,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterD (){
+    private static String [] [] letterD (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -315,7 +317,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterE (){
+    private static String [] [] letterE (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -368,7 +370,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterF (){
+    private static String [] [] letterF (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -421,7 +423,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterG (){
+    private static String [] [] letterG (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -474,7 +476,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterH (){
+    private static String [] [] letterH (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -527,7 +529,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterI (){
+    private static String [] [] letterI (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -580,7 +582,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterJ (){
+    private static String [] [] letterJ (){
         String [] [] array = new String[7][5];
         array[0] [0] = " ";
         array[0] [1] = " ";
@@ -626,7 +628,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterK (){
+    private static String [] [] letterK (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -679,7 +681,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterL (){
+    private static String [] [] letterL (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -732,7 +734,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterM (){
+    private static String [] [] letterM (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -785,7 +787,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterN (){
+    private static String [] [] letterN (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -838,7 +840,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterO (){
+    private static String [] [] letterO (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -891,7 +893,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterP (){
+    private static String [] [] letterP (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -944,7 +946,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterQ (){
+    private static String [] [] letterQ (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -997,7 +999,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterR (){
+    private static String [] [] letterR (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -1050,7 +1052,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterS (){
+    private static String [] [] letterS (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1103,7 +1105,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterT (){
+    private static String [] [] letterT (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -1156,7 +1158,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterU (){
+    private static String [] [] letterU (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1209,7 +1211,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterV (){
+    private static String [] [] letterV (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1262,7 +1264,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterW (){
+    private static String [] [] letterW (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1315,7 +1317,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterX (){
+    private static String [] [] letterX (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1368,7 +1370,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterY (){
+    private static String [] [] letterY (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1421,7 +1423,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] letterZ (){
+    private static String [] [] letterZ (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -1474,7 +1476,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberZero (){
+    private static String [] [] numberZero (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1527,7 +1529,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberOne (){
+    private static String [] [] numberOne (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = " ";
@@ -1580,7 +1582,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberTwo (){
+    private static String [] [] numberTwo (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1633,7 +1635,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberThree (){
+    private static String [] [] numberThree (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1686,7 +1688,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberFour (){
+    private static String [] [] numberFour (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -1739,7 +1741,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberFive (){
+    private static String [] [] numberFive (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -1792,7 +1794,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberSix (){
+    private static String [] [] numberSix (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1845,7 +1847,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberSeven (){
+    private static String [] [] numberSeven (){
         String [] [] array = new String[7][6];
         array[0] [0] = "*";
         array[0] [1] = "*";
@@ -1898,7 +1900,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberEight (){
+    private static String [] [] numberEight (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -1951,7 +1953,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberNine (){
+    private static String [] [] numberNine (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -2004,7 +2006,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] numberFree (){
+    private static String [] [] numberFree (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = " ";
@@ -2057,7 +2059,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] symbolQuestion (){
+    private static String [] [] symbolQuestion (){
         String [] [] array = new String[7][6];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -2110,7 +2112,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] symbolWTF (){
+    private static String [] [] symbolWTF (){
         String [] [] array = new String[7][1];
         array[0] [0] = "*";
 
@@ -2128,7 +2130,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] symbolBrackets1 (){
+    private static String [] [] symbolBrackets1 (){
         String [] [] array = new String[7][2];
         array[0] [0] = " ";
         array[0] [1] = "*";
@@ -2153,7 +2155,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] symbolBrackets2 (){
+    private static String [] [] symbolBrackets2 (){
         String [] [] array = new String[7][2];
         array[0] [0] = "*";
         array[0] [1] = " ";
@@ -2178,7 +2180,7 @@ public class HomeWork {
         return array;
     }
 
-    public static String [] [] symbolPoint (){
+    private static String [] [] symbolPoint (){
         String [] [] array = new String[7][2];
         array[0] [0] = " ";
         array[0] [1] = " ";

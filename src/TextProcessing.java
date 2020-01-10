@@ -9,6 +9,7 @@ public class TextProcessing {
         ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
         whatALongWord(listSpaceBetweenWords);
         ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
+        System.out.println("In this text is: "+(listSentence.size()-1)+" sentences");
         String sentenceUpperCase = eachSecondSentence(textFromFile);
         newFile("TextUpperCase.txt",sentenceUpperCase);
     }
@@ -29,16 +30,17 @@ public class TextProcessing {
         return stringBuilder.toString();
     }//Return text from file
 
-    public static ArrayList <Integer> wordsInFile (String textFromFile) {
+    private static ArrayList <Integer> wordsInFile (String textFromFile) {
+        /*Form array where will be including indexes all spaces in text*/
         ArrayList <Integer> arrayListWorlds = new ArrayList<>();
-        arrayListWorlds.add(0);
+        arrayListWorlds.add(0);//First index
         if (textFromFile.length() != 0) {
             for (int i = 0; i < textFromFile.length(); i++) {
                 if (textFromFile.charAt(i) == ' '){
                     arrayListWorlds.add(i);
                 }
             }
-            arrayListWorlds.add(textFromFile.length()-1);
+            arrayListWorlds.add(textFromFile.length()-1);//Last index
         }
         System.out.println("In this file is: "+(arrayListWorlds.size()-1)+" words");
         return arrayListWorlds;
@@ -74,8 +76,9 @@ public class TextProcessing {
     }//How many words those are have three five and seven symbol
 
     public static ArrayList <Integer> sentenceInFile (String textFromFile) {
+        /*Form array where will be including indexes all sentence in text*/
         ArrayList <Integer> arrayListSentence = new ArrayList<>();
-        arrayListSentence.add(0);
+        arrayListSentence.add(0);//The beginning of the sentence
         if (textFromFile.length() != 0) {
             for (int i = 0; i < textFromFile.length(); i++) {
                 if (i >= 1) {
@@ -86,17 +89,14 @@ public class TextProcessing {
                     }
                 }
             }
-            arrayListSentence.add(textFromFile.length()-1);
+            arrayListSentence.add(textFromFile.length()-1);//The last index of the last sentence
         }
-        System.out.println("In this text is: "+(arrayListSentence.size()-1)+" sentences");
         return arrayListSentence;
     }//Return array sentence and show how many sentence is
 
     public static String eachSecondSentence (String string) {
-        ArrayList <Integer> listSentence = sentenceInFile(string);
-        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList <Integer> listSentence = sentenceInFile(string);//Get index each sentence the existing method
         String stringTemp= "";
-
         for (int i = 1; i < listSentence.size(); i++) {
             if (i%2 == 0){
                 stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)).toUpperCase());
@@ -108,4 +108,26 @@ public class TextProcessing {
         return stringTemp;
     }//Return text where each second sentence uppercase letters
 
+    public static String thirdSentencesConsonant (String string) {
+        ArrayList <Integer> listSentence = sentenceInFile(string);
+        String stringTemp= "";
+        for (int i = 1; i < listSentence.size(); i++) {
+            if (i%3 == 0){
+                String str = "";
+                str = string.substring(listSentence.get(i-1), listSentence.get(i));
+                for (int j = 0; j < str.length()-1; j++ ){
+                    if (str.charAt(j) == 'a'){
+
+
+                    }
+                }
+            }
+            else {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)));
+            }
+        }
+
+
+        return stringTemp;
+    }
 }
