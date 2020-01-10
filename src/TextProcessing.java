@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class TextProcessing {
     public static void main(String[] args) throws Exception {
-        String textFromFile =  returnString("Text.txt");
+        String textFromFile =  returnString("Text2.txt");
         ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
         whatALongWord(listSpaceBetweenWords);
         ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
@@ -14,6 +14,10 @@ public class TextProcessing {
         newFile("TextUpperCase.txt",sentenceUpperCase);
         String sentencesConsonant = thirdSentencesConsonant(textFromFile);
         newFile("TextConsonant.txt",sentencesConsonant);
+        String lastThreeSentences = lastThreeSentencesConcat(textFromFile);
+        newFile("TextLastThreeSentence.txt",lastThreeSentences);
+
+
     }
 
     private static void newFile(String fileName, String textInFile) throws Exception {
@@ -170,6 +174,23 @@ public class TextProcessing {
         }
         return stringTemp;
     }//Search each third sentences and rewrite letter from vowel to consonant
+
+    private static String lastThreeSentencesConcat (String string) {
+        ArrayList <Integer> listSentence = sentenceInFile(string);//Get index each sentence the existing method
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(string);
+        /*Get index where finished last three sentences*/
+        int thirdSentence = listSentence.get(listSentence.size()-3);
+        int startThirdSentence = thirdSentence--;
+        int fourSentence = listSentence.get(listSentence.size()-2);
+        int startFourSentence = fourSentence--;
+        System.out.println(thirdSentence);
+        String str1 = ",";
+        stringBuilder.replace(thirdSentence,startThirdSentence,str1);
+        stringBuilder.replace(fourSentence,startFourSentence,str1);
+
+        return stringBuilder.toString();
+    }//Last three sentence concat
 
 
 }
