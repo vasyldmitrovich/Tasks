@@ -12,15 +12,17 @@ public class TextProcessing {
         System.out.println("In this text is: "+(listSentence.size()-1)+" sentences");
         String sentenceUpperCase = eachSecondSentence(textFromFile);
         newFile("TextUpperCase.txt",sentenceUpperCase);
+        String sentencesConsonant = thirdSentencesConsonant(textFromFile);
+        newFile("TextConsonant.txt",sentencesConsonant);
     }
 
-    public static void newFile(String fileName, String textInFile) throws Exception {
+    private static void newFile(String fileName, String textInFile) throws Exception {
         FileWriter fileWriter = new FileWriter(fileName);
         fileWriter.write(textInFile);
         fileWriter.close();
     }//Create new file and add text in this file
 
-    public static String returnString (String fileName) throws Exception {
+    private static String returnString (String fileName) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         FileReader fileReader = new FileReader(fileName);
         Scanner scanner = new Scanner(fileReader);
@@ -46,7 +48,7 @@ public class TextProcessing {
         return arrayListWorlds;
     }//Return array spaces between words
 
-    public static void whatALongWord (ArrayList <Integer> listSpace) {
+    private static void whatALongWord (ArrayList <Integer> listSpace) {
         int three = 0;
         int five = 0;
         int seven = 0;
@@ -75,7 +77,7 @@ public class TextProcessing {
             System.out.println("In this file is: " + seven + " words that have seven symbol");
     }//How many words those are have three five and seven symbol
 
-    public static ArrayList <Integer> sentenceInFile (String textFromFile) {
+    private static ArrayList <Integer> sentenceInFile (String textFromFile) {
         /*Form array where will be including indexes all sentence in text*/
         ArrayList <Integer> arrayListSentence = new ArrayList<>();
         arrayListSentence.add(0);//The beginning of the sentence
@@ -94,40 +96,80 @@ public class TextProcessing {
         return arrayListSentence;
     }//Return array sentence and show how many sentence is
 
-    public static String eachSecondSentence (String string) {
+    private static String eachSecondSentence (String string) {
         ArrayList <Integer> listSentence = sentenceInFile(string);//Get index each sentence the existing method
         String stringTemp= "";
+        /*We listing all sentence*/
         for (int i = 1; i < listSentence.size(); i++) {
-            if (i%2 == 0){
+            /*First two if - for last sentence, others if - for others sentences */
+            if ( listSentence.get(i) == listSentence.get(listSentence.size()-1) & i%2 == 0) {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),(listSentence.get(i)+1)).toUpperCase());
+            }
+            if ( listSentence.get(i) == listSentence.get(listSentence.size()-1) & i%2 != 0) {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),(listSentence.get(i)+1)));
+            }
+            if (i%2 == 0 & listSentence.get(i) < listSentence.get(listSentence.size()-1)){
                 stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)).toUpperCase());
             }
-            else {
+            if (i%2 != 0 & listSentence.get(i) < listSentence.get(listSentence.size()-1)) {
                 stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)));
             }
             }
         return stringTemp;
     }//Return text where each second sentence uppercase letters
 
-    public static String thirdSentencesConsonant (String string) {
-        ArrayList <Integer> listSentence = sentenceInFile(string);
-        String stringTemp= "";
+    private static String thirdSentencesConsonant (String string) {
+        /*Rewrite vowel to consonant*/
+        ArrayList<Integer> listSentence = sentenceInFile(string);//Get index each sentence the existing method
+        char whatWeWantToRewrite = 'W';
+        String str = "";
+        String stringTemp = "";
+        /*We listing all sentence*/
         for (int i = 1; i < listSentence.size(); i++) {
-            if (i%3 == 0){
-                String str = "";
-                str = string.substring(listSentence.get(i-1), listSentence.get(i));
-                for (int j = 0; j < str.length()-1; j++ ){
-                    if (str.charAt(j) == 'a'){
-
-
+            /*First two if - for last sentence, others if - for others sentences */
+            if (listSentence.get(i) == listSentence.get(listSentence.size() - 1) & i % 3 == 0) {
+                /*Take from string the sentence we need*/
+                str = string.substring(listSentence.get(i - 1), (listSentence.get(i)+1));
+                StringBuilder stringBuilder = new StringBuilder();
+                /*We listing each char in the sentence search consonant*/
+                for (int j = 0; j < str.length(); j++) {
+                    /*If consonant is, we rewrite this consonant*/
+                    if (str.charAt(j) == 'a' || str.charAt(j) == 'e'
+                            || str.charAt(j) == 'o' || str.charAt(j) == 'u') {
+                        stringBuilder.append(whatWeWantToRewrite);
+                    }
+                    else {
+                        stringBuilder.append(str.charAt(j));
                     }
                 }
+                stringTemp = stringTemp.concat(stringBuilder.toString());
             }
-            else {
-                stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)));
+            if (listSentence.get(i) == listSentence.get(listSentence.size() - 1) & i % 3 != 0) {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i - 1), (listSentence.get(i) + 1)));
+            }
+            if (i % 3 == 0 & listSentence.get(i) < listSentence.get(listSentence.size() - 1)) {
+                /*Take from string the sentence we need*/
+                str = string.substring(listSentence.get(i - 1), listSentence.get(i));
+                StringBuilder stringBuilderTwo = new StringBuilder();
+                /*We listing each char in the sentence search consonant*/
+                for (int j = 0; j < str.length(); j++) {
+                    /*If consonant is, we rewrite this consonant*/
+                    if (str.charAt(j) == 'a' || str.charAt(j) == 'e'
+                            || str.charAt(j) == 'o' || str.charAt(j) == 'u') {
+                        stringBuilderTwo.append(whatWeWantToRewrite);
+                    }
+                    else {
+                        stringBuilderTwo.append(str.charAt(j));
+                    }
+                }
+                stringTemp = stringTemp.concat(stringBuilderTwo.toString());
+            }
+            if (i % 3 != 0 & listSentence.get(i) < listSentence.get(listSentence.size() - 1)) {
+                stringTemp = stringTemp.concat(string.substring(listSentence.get(i - 1), listSentence.get(i)));
             }
         }
-
-
         return stringTemp;
-    }
+    }//Search each third sentences and rewrite letter from vowel to consonant
+
+
 }
