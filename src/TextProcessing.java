@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class TextProcessing {
     public static void main(String[] args) throws Exception {
-        String textFromFile =  returnString("Text2.txt");
+        String textFromFile =  returnString("Text.txt");
         ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
         whatALongWord(listSpaceBetweenWords);
         ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
@@ -184,7 +184,6 @@ public class TextProcessing {
         int startThirdSentence = thirdSentence--;
         int fourSentence = listSentence.get(listSentence.size()-2);
         int startFourSentence = fourSentence--;
-        System.out.println(thirdSentence);
         String str1 = ",";
         stringBuilder.replace(thirdSentence,startThirdSentence,str1);
         stringBuilder.replace(fourSentence,startFourSentence,str1);
