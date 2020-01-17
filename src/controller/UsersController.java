@@ -16,7 +16,19 @@ public class UsersController {
         Users user = CreateObject.getUsers();
         Product[] products = CreateObject.getProducts();
         UsersShow usersShow = new UsersShow();
-        usersShow.replaceBalanceToSpend(user,products,productNumber);
+        if (productNumber >=0 && productNumber < products.length) {
+            if (products[productNumber].getPrice() < user.getBalance()) {
+                double temp = products[productNumber].getPrice();
+                user.ReduceBalance(temp);
+                usersShow.replaceBalanceToSpend(user,products,productNumber);
+            }
+            else {
+                usersShow.printDoNot();
+            }
+        }
+        else {
+            usersShow.printDoNotExist();
+        }
         CreateObject createObject = new CreateObject();
         createObject.setUsers(user);
     }
