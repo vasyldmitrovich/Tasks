@@ -5,17 +5,33 @@ import java.util.Scanner;
 
 public class TextProcessing {
     public static void main(String[] args) throws Exception {
+        //Task 1. Get text from file
         String textFromFile =  returnString("Text.txt");
+        //Task 1.1 Get index all space between word
         ArrayList <Integer> listSpaceBetweenWords = wordsInFile(textFromFile);
+        System.out.println("In this file is: "+(listSpaceBetweenWords.size()-1)+" words");
+        //Task 2 Print haw many words length - 3, 5 and 7 symbol
         whatALongWord(listSpaceBetweenWords);
+        //Task 3 Get list where sentences finished
         ArrayList <Integer> listSentence = sentenceInFile(textFromFile);
         System.out.println("In this text is: "+(listSentence.size()-1)+" sentences");
+        //Task 4 Return string where each second sentences is upper
         String sentenceUpperCase = eachSecondSentence(textFromFile);
-        newFile("TextUpperCase.txt",sentenceUpperCase);
+        newFile("TextUpperCase.txt",sentenceUpperCase);//Create new file where each second sentences is upper
+        //Task 5 Return string where each third sentences rewrite vowel to consonant
         String sentencesConsonant = thirdSentencesConsonant(textFromFile);
-        newFile("TextConsonant.txt",sentencesConsonant);
+        newFile("TextConsonant.txt",sentencesConsonant);//Create file with this text
+        //Task 6 Return string where last three sentences concat
         String lastThreeSentences = lastThreeSentencesConcat(textFromFile);
-        newFile("TextLastThreeSentence.txt",lastThreeSentences);
+        newFile("TextLastThreeSentence.txt",lastThreeSentences);//Create file with this text
+        //Task 7 Get list each words
+        ArrayList <String> listEachWords = listWordsInFile(textFromFile);
+        ArrayList <Integer> listEachIntegers = inSentenceIsInteger(textFromFile);
+
+        for (int i = 0; i < listEachIntegers.size(); i++) {
+            System.out.print(listEachIntegers.get(i)+" ");
+        }
+                //TODO Знайти скільки в тесті є дат (формати: 1996, 2003-02-01)
 
 
     }
@@ -33,7 +49,7 @@ public class TextProcessing {
         while (scanner.hasNextLine()){
             stringBuilder.append(scanner.nextLine());
         }
-        return stringBuilder.toString();
+    return stringBuilder.toString();
     }//Return text from file
 
     private static ArrayList <Integer> wordsInFile (String textFromFile) {
@@ -48,8 +64,7 @@ public class TextProcessing {
             }
             arrayListWorlds.add(textFromFile.length()-1);//Last index
         }
-        System.out.println("In this file is: "+(arrayListWorlds.size()-1)+" words");
-        return arrayListWorlds;
+    return arrayListWorlds;
     }//Return array spaces between words
 
     private static void whatALongWord (ArrayList <Integer> listSpace) {
@@ -97,7 +112,7 @@ public class TextProcessing {
             }
             arrayListSentence.add(textFromFile.length()-1);//The last index of the last sentence
         }
-        return arrayListSentence;
+    return arrayListSentence;
     }//Return array sentence and show how many sentence is
 
     private static String eachSecondSentence (String string) {
@@ -118,8 +133,8 @@ public class TextProcessing {
             if (i%2 != 0 & listSentence.get(i) < listSentence.get(listSentence.size()-1)) {
                 stringTemp = stringTemp.concat(string.substring(listSentence.get(i-1),listSentence.get(i)));
             }
-            }
-        return stringTemp;
+        }
+    return stringTemp;
     }//Return text where each second sentence uppercase letters
 
     private static String thirdSentencesConsonant (String string) {
@@ -172,7 +187,7 @@ public class TextProcessing {
                 stringTemp = stringTemp.concat(string.substring(listSentence.get(i - 1), listSentence.get(i)));
             }
         }
-        return stringTemp;
+    return stringTemp;
     }//Search each third sentences and rewrite letter from vowel to consonant
 
     private static String lastThreeSentencesConcat (String string) {
@@ -188,8 +203,60 @@ public class TextProcessing {
         stringBuilder.replace(thirdSentence,startThirdSentence,str1);
         stringBuilder.replace(fourSentence,startFourSentence,str1);
 
-        return stringBuilder.toString();
+    return stringBuilder.toString();
     }//Last three sentence concat
+
+    private static ArrayList <String> listWordsInFile (String string) {
+        //TODO protected if in sentence is two spaces.
+        ArrayList <Integer> listSentence = wordsInFile(string);//Get index each sentence the existing method
+        ArrayList <String> arrayListWords = new ArrayList<>();//This will be list all words
+        for (int i = 0; i < listSentence.size()-1; i++) {
+            /*This if add in list only first word*/
+            if (i == 0) {
+                String tempStrFirstWord = string.substring(listSentence.get(i), listSentence.get(i + 1));
+                    int lastChar = tempStrFirstWord.length() - 1;
+                    if (tempStrFirstWord.charAt(lastChar) == '.' || tempStrFirstWord.charAt(lastChar) == ',' || tempStrFirstWord.charAt(lastChar) == '!' || tempStrFirstWord.charAt(lastChar) == '?') {
+                        arrayListWords.add(tempStrFirstWord.substring(0, lastChar - 1));
+                    } else {
+                        arrayListWords.add(tempStrFirstWord);
+                    }
+            }
+            /*This if add on list each following words*/
+            if (i > 0) {
+                String tempStrFollowingWord = string.substring((listSentence.get(i))+1, listSentence.get(i + 1));
+                int last = tempStrFollowingWord.length() - 1;
+                if (tempStrFollowingWord.charAt(last) == '.' || tempStrFollowingWord.charAt(last) == ',' || tempStrFollowingWord.charAt(last) == '!' || tempStrFollowingWord.charAt(last) == '?') {
+                    arrayListWords.add(tempStrFollowingWord.substring(0, last));
+                }
+                else {
+                    arrayListWords.add(tempStrFollowingWord);
+                }
+            }
+        }
+    return arrayListWords;
+    }//Return list all words
+
+    public static boolean checkString(String string) {
+        try {
+            Integer.parseInt(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }//Check is string integer
+
+    public static ArrayList <Integer> inSentenceIsInteger (String string) {
+        ArrayList <String> arrayList = listWordsInFile(string);//This is list all words
+        ArrayList <Integer> listIntegers = new ArrayList<>();//This will be list all integer in text;
+        boolean temp;
+        for (int i = 0; i < arrayList.size(); i++) {
+            temp = checkString(arrayList.get(i));//Check word is this word integer or not
+            if (temp) {
+                listIntegers.add(Integer.parseInt(arrayList.get(i)));
+            }
+        }
+    return listIntegers;
+    }//Return list all words integer
 
 
 }
